@@ -1,0 +1,70 @@
+<div class="table-container">
+	<div class="table">
+		<div class="table-body">
+			<div class="row header">
+				<ng-container *ngFor="let key of itemKeys">
+					<p class="cell">{{key}}</p>
+				</ng-container>
+			</div>
+			<div [ngClass]="{'no-hover' : editingMode && selectedRecord.id === item.id}" class="row"
+				*ngFor="let item of items">
+				<ng-container *ngIf="!(editingMode && selectedRecord.id === item.id) else editForm">
+					<ng-container *ngFor="let key of itemKeys">
+						<p [ngClass]="{'cost-cell' : key === 'cost'}" class="cell">{{item[key]}}
+							<span *ngIf="key === 'cost' && currencySymbol != 'EUR'">
+								({{item[key] * currentExhangeRate | currency:
+								currencySymbol :'symbol':'1.2-2' }})
+							</span>
+						</p>
+					</ng-container>
+					<div class="control-container">
+						<button class="control" (click)="selectRecord(item.id)"><span
+								class="material-icons positive">edit</span></button>
+						<button class="control" (click)="deleteItem(item.id)"><span
+								class="material-icons negative">delete</span></button>
+					</div>
+				</ng-container>
+			</div>
+			<div class="form-container">
+				<ng-container *ngIf="!addingMode else addItemForm">
+					<button [disabled]="editingMode" class="add-record" (click)="toggleAddForm()">
+						<span class="material-icons">add</span>
+					</button>
+				</ng-container>
+			</div>
+			<div class="error-list" *ngIf="errorList">
+				<ng-container *ngFor="let error of errorList | keyvalue">
+					<p class="error">{{error.value}}</p>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+</div>
+<ng-template #addItemForm>
+	<ng-container *ngTemplateOutlet="form"></ng-container>
+	<div class="add-controls">
+		<button (click)="addItem()"><span class="material-icons positive">done</span></button>
+		<button (click)="toggleAddForm()"><span class="material-icons negative">close</span></button>
+	</div>
+</ng-template>
+
+<ng-template #editForm>
+	<ng-container *ngTemplateOutlet="form"></ng-container>
+	<div class="edit-controls">
+		<button><span (click)="updateRecord()" class="material-icons positive">done</span></button>
+		<button><span (click)="toggleEditForm()" class="material-icons negative">close</span></button>
+	</div>
+</ng-template>
+
+<ng-template #form>
+	<form [formGroup]="itemForm" class="form">
+		<ng-container *ngFor="let key of itemKeys" [ngSwitch]="createFormField(key)">
+			<input (change)="fetchErrors(key)" *ngSwitchCase="'text'" type="text" [formControlName]="key"
+				[placeholder]="key">
+			<input (change)="fetchErrors(key)" *ngSwitchCase="'number'" type="number" value="1" [formControlName]="key"
+				[placeholder]="key">
+			<input (change)="fetchErrors(key)" *ngSwitchCase="'currency'" type="number" value="1" step="0.1"
+				[formControlName]="key" [placeholder]="key">
+		</ng-container>
+	</form>
+</ng-template>

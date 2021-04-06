@@ -1,0 +1,18 @@
+::ng-deep {
+	.mat-tab-label-content {
+		color: black;
+	}
+
+	.mat-tab-header {
+		background: white;
+	}
+
+	.mat-ink-bar {
+		background-color: lightblue !important;
+	}
+
+	.mat-tab-disabled {
+		font-size: 1rem;
+		font-weight: bold;
+	}
+}

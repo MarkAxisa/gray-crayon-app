@@ -1,0 +1,17 @@
+.customers-container {
+	height: 100vh;
+
+	.container-body {
+		display: flex;
+		flex-direction: column;
+		width: max-content;
+		width: 50%;
+		margin: auto;
+		height: auto;
+		justify-content: center;
+		background: white;
+		margin-top: 8rem;
+		padding: 4rem 5rem;
+		box-shadow: 0px 1px 5px 1px rgba(105,105,105,0.75);
+	}
+}

@@ -1,0 +1,7 @@
+<div class="customers-container">
+	<div class="container-body">
+		<ng-container *ngIf="customers">
+			<app-table [items]="customers" type="CustomerService"></app-table>
+		</ng-container>
+	</div>
+</div>

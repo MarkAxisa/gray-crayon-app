@@ -1,0 +1,12 @@
+<div class="products-container">
+	<div class="container-body">
+		<ng-container *ngIf="products">
+			<app-table [items]="products" type="ProductService"></app-table>
+			<div class="conversion-controls">
+				<button [disabled]="conversionService.currentCurrency === conversion.value"
+					(click)="conversionService.switchCurrency(conversion.value)"
+					*ngFor="let conversion of conversions">{{conversion.text}}</button>
+			</div>
+		</ng-container>
+	</div>
+</div>
